@@ -1,17 +1,21 @@
 package com.example.election;
 
+import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,13 +26,14 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Voting extends AppCompatActivity {
+public class Voting extends AppCompatActivity{
 
     ArrayList<Candidate> candidates;
     ListView lv;
     String data="";
+    TextView tvDisplay;
+    Button btnConfirm;
 
-    TextView tvSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +45,15 @@ public class Voting extends AppCompatActivity {
         }
 
 
-        tvSelected = findViewById(R.id.tvSelected);
+
 
 
         candidates = new ArrayList<>();
         lv = (ListView) findViewById(R.id.lvCandidates);
+        tvDisplay = findViewById(R.id.tvDisplay);
+        btnConfirm = findViewById(R.id.btnConfirm);
 
         try {
-            // check if voted
-            // You have already voted!
 
             URL url = new URL("https://marsabesapi.000webhostapp.com/MARS-ABES/readCandidates.php");
 
@@ -87,6 +92,28 @@ public class Voting extends AppCompatActivity {
         );
 
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Button btnCand = (Button) view.findViewById(R.id.btnCandidate);
+                view.requestFocusFromTouch();
+                tvDisplay.setText(btnCand.getText().toString());
+            }
+        });
+
+
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent confirmationIntent = new Intent(Voting.this, Confirmation.class);
+                Intent iin = getIntent();
+                iin.putExtra("President", tvDisplay.getText().toString());
+                Bundle b = iin.getExtras();
+                confirmationIntent.putExtra("bundle", b);
+                startActivity(confirmationIntent);
+            }
+        });
 
     }
 }

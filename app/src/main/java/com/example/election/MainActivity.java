@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "You cancelled the QR Code scanning.", Toast.LENGTH_LONG).show();
             }
             else{
-                Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
                 Intent fetchIntent = new Intent(MainActivity.this, FetchData.class);
                 fetchIntent.putExtra("voterID", result.getContents());
                 startActivity(fetchIntent);

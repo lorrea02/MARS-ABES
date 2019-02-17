@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@drawable/my_selector">
 
     <ImageView
         android:id="@+id/imgCandidate"
@@ -25,6 +26,7 @@
         android:textColor="@color/zxing_status_text"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        android:focusable="false" />
 
 </LinearLayout>

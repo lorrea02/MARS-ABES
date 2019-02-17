@@ -14,12 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter<Candidate> {
-
+public class CustomListAdapter extends ArrayAdapter<Candidate>{
 
     ArrayList<Candidate> candidates;
     Context context;
@@ -27,35 +26,41 @@ public class CustomListAdapter extends ArrayAdapter<Candidate> {
 
 
 
-    public CustomListAdapter(Context context, int resource, ArrayList<Candidate> candidates) {
+    public CustomListAdapter(Context context, int resource, ArrayList<Candidate> candidates){
         super(context, resource, candidates);
         this.candidates = candidates;
         this.context = context;
         this.resource = resource;
-
     }
+
+
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext()
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.candidate_layout, null, true);
 
         }
-        Candidate candidate = getItem(position);
+        final Candidate candidate = getItem(position);
 
 
         Button btnCandidate = (Button) convertView.findViewById(R.id.btnCandidate);
         btnCandidate.setText(candidate.getName());
+        btnCandidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView mList = ((ListView) parent);
+                mList.performItemClick(v, position, position);
+                mList.getChildAt(position - mList.getFirstVisiblePosition()).setSelected(true);
+            }
+        });
 
         ImageView imgCandidate = (ImageView) convertView.findViewById(R.id.imgCandidate);
         Drawable myDrawable = context.getResources().getDrawable(R.drawable.ic_action_name);
         imgCandidate.setImageDrawable(myDrawable);
-
-
-
         return convertView;
     }
 }

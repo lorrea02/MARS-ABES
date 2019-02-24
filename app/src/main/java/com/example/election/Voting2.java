@@ -1,21 +1,19 @@
 package com.example.election;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Voting extends AppCompatActivity{
+public class Voting2 extends AppCompatActivity{
 
     ArrayList<Candidate> candidates;
     ListView lv;
@@ -38,7 +36,7 @@ public class Voting extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voting);
+        setContentView(R.layout.activity_voting2);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -52,11 +50,11 @@ public class Voting extends AppCompatActivity{
         lv = (ListView) findViewById(R.id.lvCandidates);
         tvDisplay = findViewById(R.id.tvDisplay);
         btnConfirm = findViewById(R.id.btnConfirm);
-        btnSkip = findViewById(R.id.skipBtn);
+        btnSkip = findViewById(R.id.skipBtn2);
 
         try {
 
-            URL url = new URL("https://marsabesapi.000webhostapp.com/MARS-ABES/readPresidents.php");
+            URL url = new URL("https://marsabesapi.000webhostapp.com/MARS-ABES/readVice.php");
 
             HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -67,6 +65,7 @@ public class Voting extends AppCompatActivity{
                 data = data + line;
             }
             data = data.trim();
+            Log.d("sabe", data);
             JSONObject retJson = new JSONObject(data);
             JSONArray jsonArray = retJson.getJSONArray("records");
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -107,25 +106,26 @@ public class Voting extends AppCompatActivity{
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viceIntent = new Intent(Voting.this, Voting2.class);
+                Intent secretaryIntent = new Intent(Voting2.this, Voting3.class);
                 Intent iin = getIntent();
                 Bundle b = iin.getExtras();
-                b.putString("President", tvDisplay.getText().toString());
-                viceIntent.putExtra("bundle", b);
-                startActivity(viceIntent);
+                Bundle b2 = b.getBundle("bundle");
+                b2.putString("Vice President", tvDisplay.getText().toString());
+                secretaryIntent.putExtra("bundle", b2);
+                startActivity(secretaryIntent);
             }
         });
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viceIntent = new Intent(Voting.this, Voting2.class);
+                Intent secretaryIntent = new Intent(Voting2.this, Voting3.class);
                 Intent iin = getIntent();
-                iin.putExtra("President", "--");
                 Bundle b = iin.getExtras();
-                b.putString("President", "--");
-                viceIntent.putExtra("bundle", b);
-                startActivity(viceIntent);
+                Bundle b2 = b.getBundle("bundle");
+                b2.putString("Vice President", "--");
+                secretaryIntent.putExtra("bundle", b2);
+                startActivity(secretaryIntent);
             }
         });
 

@@ -1,21 +1,18 @@
 package com.example.election;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +23,7 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Voting extends AppCompatActivity{
+public class Voting3 extends AppCompatActivity{
 
     ArrayList<Candidate> candidates;
     ListView lv;
@@ -38,7 +35,7 @@ public class Voting extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voting);
+        setContentView(R.layout.activity_voting3);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -52,11 +49,11 @@ public class Voting extends AppCompatActivity{
         lv = (ListView) findViewById(R.id.lvCandidates);
         tvDisplay = findViewById(R.id.tvDisplay);
         btnConfirm = findViewById(R.id.btnConfirm);
-        btnSkip = findViewById(R.id.skipBtn);
+        btnSkip = findViewById(R.id.skipBtn3);
 
         try {
 
-            URL url = new URL("https://marsabesapi.000webhostapp.com/MARS-ABES/readPresidents.php");
+            URL url = new URL("https://marsabesapi.000webhostapp.com/MARS-ABES/readSecretary.php");
 
             HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -107,25 +104,26 @@ public class Voting extends AppCompatActivity{
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viceIntent = new Intent(Voting.this, Voting2.class);
+                Intent confirmationIntent = new Intent(Voting3.this, Confirmation.class);
                 Intent iin = getIntent();
                 Bundle b = iin.getExtras();
-                b.putString("President", tvDisplay.getText().toString());
-                viceIntent.putExtra("bundle", b);
-                startActivity(viceIntent);
+                Bundle b2 = b.getBundle("bundle");
+                b2.putString("Secretary", tvDisplay.getText().toString());
+                confirmationIntent.putExtra("bundle", b2);
+                startActivity(confirmationIntent);
             }
         });
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viceIntent = new Intent(Voting.this, Voting2.class);
+                Intent confirmationIntent = new Intent(Voting3.this, Confirmation.class);
                 Intent iin = getIntent();
-                iin.putExtra("President", "--");
                 Bundle b = iin.getExtras();
-                b.putString("President", "--");
-                viceIntent.putExtra("bundle", b);
-                startActivity(viceIntent);
+                Bundle b2 = b.getBundle("bundle");
+                b2.putString("Secretary", "--");
+                confirmationIntent.putExtra("bundle", b2);
+                startActivity(confirmationIntent);
             }
         });
 

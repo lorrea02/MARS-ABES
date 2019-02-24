@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Confirmation"></activity>
+        <activity android:name=".Confirmation" />
         <activity android:name=".Voting" />
+        <activity android:name=".Voting2" />
+        <activity android:name=".Voting3" />
         <activity android:name=".FetchData" />
         <activity android:name=".Splash">
             <intent-filter>

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.json.JSONArray;
@@ -107,19 +108,23 @@ public class Voting extends AppCompatActivity{
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viceIntent = new Intent(Voting.this, Voting2.class);
-                Intent iin = getIntent();
-                Bundle b = iin.getExtras();
-                b.putString("President", tvDisplay.getText().toString());
-                viceIntent.putExtra("bundle", b);
-                startActivity(viceIntent);
+                if(tvDisplay.getText().toString().equals("[Please Select a Candidate]"))
+                    Toast.makeText(Voting.this, "Please either select a candidate first or skip.", Toast.LENGTH_LONG).show();
+                else{
+                    Intent viceIntent = new Intent(Voting.this, VicePresident.class);
+                    Intent iin = getIntent();
+                    Bundle b = iin.getExtras();
+                    b.putString("President", tvDisplay.getText().toString());
+                    viceIntent.putExtra("bundle", b);
+                    startActivity(viceIntent);
+                }
             }
         });
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viceIntent = new Intent(Voting.this, Voting2.class);
+                Intent viceIntent = new Intent(Voting.this, VicePresident.class);
                 Intent iin = getIntent();
                 iin.putExtra("President", "--");
                 Bundle b = iin.getExtras();

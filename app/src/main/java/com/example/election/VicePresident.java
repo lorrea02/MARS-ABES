@@ -1,15 +1,16 @@
 package com.example.election;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,33 +25,29 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Voting2 extends AppCompatActivity{
+public class VicePresident extends AppCompatActivity {
 
     ArrayList<Candidate> candidates;
     ListView lv;
-    String data="";
+    String data = "";
     TextView tvDisplay;
     Button btnConfirm, btnSkip;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voting2);
+        setContentView(R.layout.activity_vice_president);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
 
-
-
-
         candidates = new ArrayList<>();
         lv = (ListView) findViewById(R.id.lvCandidates);
-        tvDisplay = findViewById(R.id.tvDisplay);
-        btnConfirm = findViewById(R.id.btnConfirm);
-        btnSkip = findViewById(R.id.skipBtn2);
+        tvDisplay = findViewById(R.id.tvDisplay2);
+        btnConfirm = findViewById(R.id.btnConfirm2);
+        btnSkip = findViewById(R.id.btnSkip2);
 
         try {
 
@@ -79,8 +76,6 @@ public class Voting2 extends AppCompatActivity{
             }
 
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -102,24 +97,28 @@ public class Voting2 extends AppCompatActivity{
         });
 
 
-
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent secretaryIntent = new Intent(Voting2.this, Voting3.class);
-                Intent iin = getIntent();
-                Bundle b = iin.getExtras();
-                Bundle b2 = b.getBundle("bundle");
-                b2.putString("Vice President", tvDisplay.getText().toString());
-                secretaryIntent.putExtra("bundle", b2);
-                startActivity(secretaryIntent);
+                if (tvDisplay.getText().toString().equals("[Please Select a Candidate]"))
+                    Toast.makeText(VicePresident.this, "Please either select a candidate first or skip.", Toast.LENGTH_LONG).show();
+                else {
+                    Intent secretaryIntent = new Intent(VicePresident.this, Secretary.class);
+                    Intent iin = getIntent();
+                    Bundle b = iin.getExtras();
+                    Bundle b2 = b.getBundle("bundle");
+                    b2.putString("Vice President", tvDisplay.getText().toString());
+                    secretaryIntent.putExtra("bundle", b2);
+                    startActivity(secretaryIntent);
+                }
+
             }
         });
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent secretaryIntent = new Intent(Voting2.this, Voting3.class);
+                Intent secretaryIntent = new Intent(VicePresident.this, Secretary.class);
                 Intent iin = getIntent();
                 Bundle b = iin.getExtras();
                 Bundle b2 = b.getBundle("bundle");
@@ -128,6 +127,7 @@ public class Voting2 extends AppCompatActivity{
                 startActivity(secretaryIntent);
             }
         });
+
 
     }
 }

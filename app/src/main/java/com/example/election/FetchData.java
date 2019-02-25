@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class FetchData extends AppCompatActivity {
                 data = data + line;
             }
             data = data.trim();
+            Log.d("datako", data);
             JSONObject json = new JSONObject(data);
             name = json.getString("name");
             address = json.getString("address");

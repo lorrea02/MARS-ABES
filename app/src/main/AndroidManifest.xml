@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.election">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,10 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ConnectPrinter"></activity>
+        <activity android:name=".Secretary" />
+        <activity android:name=".VicePresident" />
         <activity android:name=".Confirmation" />
         <activity android:name=".Voting" />
-        <activity android:name=".Voting2" />
-        <activity android:name=".Voting3" />
         <activity android:name=".FetchData" />
         <activity android:name=".Splash">
             <intent-filter>
@@ -28,6 +31,10 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".MyService"
+            android:stopWithTask="true" />
 
         <meta-data
             android:name="preloaded_fonts"

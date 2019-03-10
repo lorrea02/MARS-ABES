@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/montserrat"
-        android:text="PRESIDENTIAL CANDIDATES"
+        android:text="BOARD OF DIRECTORS"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp"

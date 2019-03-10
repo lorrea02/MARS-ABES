@@ -18,21 +18,19 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter<Candidate>{
+public class CustomListAdapter extends ArrayAdapter<Candidate> {
 
     ArrayList<Candidate> candidates;
     Context context;
     int resource;
 
 
-
-    public CustomListAdapter(Context context, int resource, ArrayList<Candidate> candidates){
+    public CustomListAdapter(Context context, int resource, ArrayList<Candidate> candidates) {
         super(context, resource, candidates);
         this.candidates = candidates;
         this.context = context;
         this.resource = resource;
     }
-
 
 
     @NonNull
@@ -60,7 +58,30 @@ public class CustomListAdapter extends ArrayAdapter<Candidate>{
 
         ImageView imgCandidate = (ImageView) convertView.findViewById(R.id.imgCandidate);
         Drawable myDrawable = context.getResources().getDrawable(R.drawable.ic_action_name);
+        if (candidate.getName().trim().equalsIgnoreCase("Richard E. Avena"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.bod1);
+        else if (candidate.getName().trim().equalsIgnoreCase("Aurora E. Castillo"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.bod2);
+        else if (candidate.getName().trim().equalsIgnoreCase("Aurelio A. Jose Jr"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.bod3);
+        else if (candidate.getName().trim().equalsIgnoreCase("Lydia M. Mangubat"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.bod4);
+        else if (candidate.getName().trim().equalsIgnoreCase("John Paul G. Villar"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.bod5);
+        else if (candidate.getName().trim().equalsIgnoreCase("Merly J. Jacoba"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.audit1);
+        else if (candidate.getName().trim().equalsIgnoreCase("Ruth D. Lim"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.audit2);
+        else if (candidate.getName().trim().equalsIgnoreCase("Manuel G. Bautista"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.elec1);
+        else if (candidate.getName().trim().equalsIgnoreCase("Michelle C. Cruz"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.elec2);
+        else if (candidate.getName().trim().equalsIgnoreCase("Nancy P. Magno"))
+            myDrawable = context.getResources().getDrawable(R.mipmap.elec3);
+
         imgCandidate.setImageDrawable(myDrawable);
         return convertView;
     }
+
+
 }
